@@ -4,15 +4,16 @@ public class PrimeNumbers {
         int upper = 500;
 
         for (int i = lower; i < upper; i++) {
-            int multiples = 0;
+            boolean isPrime = true;
 
-            for (int j = 1; j <= i; j++) {
+            for (int j = 2; j < i; j++) {
                 if (i % j == 0) {
-                    multiples++;
+                    isPrime = false;
+                    break;
                 }
             }
 
-            if (multiples == 2) {
+            if (isPrime) {
                 System.out.println(i);
             }
         }
