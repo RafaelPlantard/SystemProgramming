@@ -6,6 +6,8 @@
 package calculator;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.text.DecimalFormat;
 
 /**
@@ -98,14 +100,21 @@ public class CalculatorView extends javax.swing.JFrame {
         setAlwaysOnTop(true);
         setName("calculatorFrame"); // NOI18N
         setResizable(false);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                formKeyTyped(evt);
+            }
+        });
 
         resultTextField.setEditable(false);
         resultTextField.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         resultTextField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         resultTextField.setText("0");
+        resultTextField.setFocusable(false);
 
         sevenButton.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         sevenButton.setText("7");
+        sevenButton.setFocusable(false);
         sevenButton.setPreferredSize(new java.awt.Dimension(75, 50));
         sevenButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,6 +124,7 @@ public class CalculatorView extends javax.swing.JFrame {
 
         eightButton.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         eightButton.setText("8");
+        eightButton.setFocusable(false);
         eightButton.setPreferredSize(new java.awt.Dimension(75, 50));
         eightButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -124,6 +134,7 @@ public class CalculatorView extends javax.swing.JFrame {
 
         nineButton.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         nineButton.setText("9");
+        nineButton.setFocusable(false);
         nineButton.setPreferredSize(new java.awt.Dimension(75, 50));
         nineButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -133,6 +144,7 @@ public class CalculatorView extends javax.swing.JFrame {
 
         divisionButton.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         divisionButton.setText("/");
+        divisionButton.setFocusable(false);
         divisionButton.setPreferredSize(new java.awt.Dimension(75, 50));
         divisionButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -142,6 +154,7 @@ public class CalculatorView extends javax.swing.JFrame {
 
         fourButton.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         fourButton.setText("4");
+        fourButton.setFocusable(false);
         fourButton.setPreferredSize(new java.awt.Dimension(75, 50));
         fourButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -151,6 +164,7 @@ public class CalculatorView extends javax.swing.JFrame {
 
         fiveButton.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         fiveButton.setText("5");
+        fiveButton.setFocusable(false);
         fiveButton.setPreferredSize(new java.awt.Dimension(75, 50));
         fiveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -160,6 +174,7 @@ public class CalculatorView extends javax.swing.JFrame {
 
         sixButton.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         sixButton.setText("6");
+        sixButton.setFocusable(false);
         sixButton.setPreferredSize(new java.awt.Dimension(75, 50));
         sixButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -169,6 +184,7 @@ public class CalculatorView extends javax.swing.JFrame {
 
         multiplicationButton.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         multiplicationButton.setText("*");
+        multiplicationButton.setFocusable(false);
         multiplicationButton.setPreferredSize(new java.awt.Dimension(75, 50));
         multiplicationButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -178,6 +194,7 @@ public class CalculatorView extends javax.swing.JFrame {
 
         oneButton.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         oneButton.setText("1");
+        oneButton.setFocusable(false);
         oneButton.setPreferredSize(new java.awt.Dimension(75, 50));
         oneButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -187,6 +204,7 @@ public class CalculatorView extends javax.swing.JFrame {
 
         twoButton.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         twoButton.setText("2");
+        twoButton.setFocusable(false);
         twoButton.setPreferredSize(new java.awt.Dimension(75, 50));
         twoButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -196,6 +214,7 @@ public class CalculatorView extends javax.swing.JFrame {
 
         threeButton.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         threeButton.setText("3");
+        threeButton.setFocusable(false);
         threeButton.setPreferredSize(new java.awt.Dimension(75, 50));
         threeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -205,6 +224,7 @@ public class CalculatorView extends javax.swing.JFrame {
 
         minusButton.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         minusButton.setText("-");
+        minusButton.setFocusable(false);
         minusButton.setPreferredSize(new java.awt.Dimension(75, 50));
         minusButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -215,6 +235,7 @@ public class CalculatorView extends javax.swing.JFrame {
         clearButton.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         clearButton.setText("CE");
         clearButton.setToolTipText("");
+        clearButton.setFocusable(false);
         clearButton.setPreferredSize(new java.awt.Dimension(75, 50));
         clearButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -224,6 +245,7 @@ public class CalculatorView extends javax.swing.JFrame {
 
         zeroButton.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         zeroButton.setText("0");
+        zeroButton.setFocusable(false);
         zeroButton.setPreferredSize(new java.awt.Dimension(75, 50));
         zeroButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -233,6 +255,7 @@ public class CalculatorView extends javax.swing.JFrame {
 
         equalButton.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         equalButton.setText("=");
+        equalButton.setFocusable(false);
         equalButton.setPreferredSize(new java.awt.Dimension(75, 50));
         equalButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -242,6 +265,7 @@ public class CalculatorView extends javax.swing.JFrame {
 
         sumButton.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         sumButton.setText("+");
+        sumButton.setFocusable(false);
         sumButton.setPreferredSize(new java.awt.Dimension(75, 50));
         sumButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -425,6 +449,19 @@ public class CalculatorView extends javax.swing.JFrame {
     private void sumButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sumButtonActionPerformed
         updateOperation(evt);
     }//GEN-LAST:event_sumButtonActionPerformed
+
+    private void formKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyTyped
+        char keyTyped = evt.getKeyChar();
+
+        switch (keyTyped) {
+            case '0': 
+                zeroButtonActionPerformed(new ActionEvent(evt, 0, "0"));
+            break;
+
+            case '1': oneButtonActionPerformed(new ActionEvent(evt, 0, "1"));
+            default:
+        }
+    }//GEN-LAST:event_formKeyTyped
 
     /**
      * @param args the command line arguments
