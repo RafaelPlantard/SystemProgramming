@@ -13,9 +13,12 @@ import java.text.DecimalFormat;
  * @author Rafael da Silva Ferreira <rafael@swift-yah.io>
  */
 public class CalculatorView extends javax.swing.JFrame {
+    private Double lhsNumber = null;
+    private Double rhsNumber = null;
+    private boolean shouldGetNewValue = true;
     private double result = 0;
     private String operation = "";
-    private DecimalFormat decimalFormat = new DecimalFormat("#.########");
+    private final DecimalFormat decimalFormat = new DecimalFormat("#.########");
 
     /**
      * Creates new form CalculatorView
@@ -25,18 +28,42 @@ public class CalculatorView extends javax.swing.JFrame {
     }
     
     private void updateTextField(ActionEvent evt) {
-        String newText = resultTextField.getText() + evt.getActionCommand();
+        String newText;
+        
+        if (shouldGetNewValue) {
+            newText = evt.getActionCommand();
+        } else {
+            newText = resultTextField.getText() + evt.getActionCommand();
+        }
+        
         Long newNumber = Long.parseLong(newText);
 
         resultTextField.setText(newNumber.toString());
+        
+        shouldGetNewValue = false;
     }
     
     private void updateTextField(String text) {
         resultTextField.setText(text);
+
+        shouldGetNewValue = false;
+    }
+    
+    private void updateNumbersForOperations() {
+        String resultText = resultTextField.getText();
+        
+        if (lhsNumber == null) {
+            lhsNumber = Double.parseDouble(resultText);
+        } else {
+            rhsNumber = Double.parseDouble(resultText);
+        }
     }
     
     private void updateOperation(ActionEvent evt) {
+        updateNumbersForOperations();
+
         operation = evt.getActionCommand();
+        shouldGetNewValue = true;
     }
 
     /**
@@ -76,11 +103,6 @@ public class CalculatorView extends javax.swing.JFrame {
         resultTextField.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         resultTextField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         resultTextField.setText("0");
-        resultTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                resultTextFieldActionPerformed(evt);
-            }
-        });
 
         sevenButton.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         sevenButton.setText("7");
@@ -358,6 +380,8 @@ public class CalculatorView extends javax.swing.JFrame {
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
         result = 0;
         operation = "";
+        lhsNumber = null;
+        rhsNumber = null;
 
         updateTextField("0");
     }//GEN-LAST:event_clearButtonActionPerformed
@@ -367,16 +391,40 @@ public class CalculatorView extends javax.swing.JFrame {
     }//GEN-LAST:event_zeroButtonActionPerformed
 
     private void equalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_equalButtonActionPerformed
-        // TODO add your handling code here:
+        updateNumbersForOperations();
+        
+        if (lhsNumber == null || rhsNumber == null) {
+            return;
+        }
+
+        switch (operation) {
+            case "+":
+                result = lhsNumber + rhsNumber;
+            break;
+            
+            case "-":
+                result = lhsNumber - rhsNumber;
+            break;
+            
+            case "*":
+                result = lhsNumber * rhsNumber;
+            break;
+            
+            case "/":
+                result = lhsNumber / rhsNumber;
+            break;
+            
+            default:
+        }
+        
+        String newText = decimalFormat.format(result);
+        
+        resultTextField.setText(newText);
     }//GEN-LAST:event_equalButtonActionPerformed
 
     private void sumButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sumButtonActionPerformed
         updateOperation(evt);
     }//GEN-LAST:event_sumButtonActionPerformed
-
-    private void resultTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resultTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_resultTextFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -394,15 +442,11 @@ public class CalculatorView extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CalculatorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CalculatorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CalculatorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(CalculatorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        
         //</editor-fold>
 
         /* Create and display the form */
