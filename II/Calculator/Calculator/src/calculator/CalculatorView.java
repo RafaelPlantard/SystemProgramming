@@ -5,17 +5,38 @@
  */
 package calculator;
 
+import java.awt.event.ActionEvent;
+import java.text.DecimalFormat;
+
 /**
  *
  * @author Rafael da Silva Ferreira <rafael@swift-yah.io>
  */
 public class CalculatorView extends javax.swing.JFrame {
+    private double result = 0;
+    private String operation = "";
+    private DecimalFormat decimalFormat = new DecimalFormat("#.########");
 
     /**
      * Creates new form CalculatorView
      */
     public CalculatorView() {
         initComponents();
+    }
+    
+    private void updateTextField(ActionEvent evt) {
+        String newText = resultTextField.getText() + evt.getActionCommand();
+        Long newNumber = Long.parseLong(newText);
+
+        resultTextField.setText(newNumber.toString());
+    }
+    
+    private void updateTextField(String text) {
+        resultTextField.setText(text);
+    }
+    
+    private void updateOperation(ActionEvent evt) {
+        operation = evt.getActionCommand();
     }
 
     /**
@@ -48,6 +69,8 @@ public class CalculatorView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Calculator");
         setAlwaysOnTop(true);
+        setName("calculatorFrame"); // NOI18N
+        setResizable(false);
 
         resultTextField.setEditable(false);
         resultTextField.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
@@ -285,59 +308,62 @@ public class CalculatorView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void sevenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sevenButtonActionPerformed
-        // TODO add your handling code here:
+        updateTextField(evt);
     }//GEN-LAST:event_sevenButtonActionPerformed
 
     private void eightButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eightButtonActionPerformed
-        // TODO add your handling code here:
+        updateTextField(evt);
     }//GEN-LAST:event_eightButtonActionPerformed
 
     private void nineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nineButtonActionPerformed
-        // TODO add your handling code here:
+        updateTextField(evt);
     }//GEN-LAST:event_nineButtonActionPerformed
 
     private void divisionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_divisionButtonActionPerformed
-        // TODO add your handling code here:
+        updateOperation(evt);
     }//GEN-LAST:event_divisionButtonActionPerformed
 
     private void fourButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fourButtonActionPerformed
-        // TODO add your handling code here:
+        updateTextField(evt);
     }//GEN-LAST:event_fourButtonActionPerformed
 
     private void fiveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fiveButtonActionPerformed
-        // TODO add your handling code here:
+        updateTextField(evt);
     }//GEN-LAST:event_fiveButtonActionPerformed
 
     private void sixButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sixButtonActionPerformed
-        // TODO add your handling code here:
+        updateTextField(evt);
     }//GEN-LAST:event_sixButtonActionPerformed
 
     private void multiplicationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_multiplicationButtonActionPerformed
-        // TODO add your handling code here:
+        updateOperation(evt);
     }//GEN-LAST:event_multiplicationButtonActionPerformed
 
     private void oneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oneButtonActionPerformed
-        // TODO add your handling code here:
+        updateTextField(evt);
     }//GEN-LAST:event_oneButtonActionPerformed
 
     private void twoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_twoButtonActionPerformed
-        // TODO add your handling code here:
+        updateTextField(evt);
     }//GEN-LAST:event_twoButtonActionPerformed
 
     private void threeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_threeButtonActionPerformed
-        // TODO add your handling code here:
+        updateTextField(evt);
     }//GEN-LAST:event_threeButtonActionPerformed
 
     private void minusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minusButtonActionPerformed
-        // TODO add your handling code here:
+        updateOperation(evt);
     }//GEN-LAST:event_minusButtonActionPerformed
 
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
-        // TODO add your handling code here:
+        result = 0;
+        operation = "";
+
+        updateTextField("0");
     }//GEN-LAST:event_clearButtonActionPerformed
 
     private void zeroButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zeroButtonActionPerformed
-        // TODO add your handling code here:
+        updateTextField(evt);
     }//GEN-LAST:event_zeroButtonActionPerformed
 
     private void equalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_equalButtonActionPerformed
@@ -345,7 +371,7 @@ public class CalculatorView extends javax.swing.JFrame {
     }//GEN-LAST:event_equalButtonActionPerformed
 
     private void sumButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sumButtonActionPerformed
-        // TODO add your handling code here:
+        updateOperation(evt);
     }//GEN-LAST:event_sumButtonActionPerformed
 
     private void resultTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resultTextFieldActionPerformed
