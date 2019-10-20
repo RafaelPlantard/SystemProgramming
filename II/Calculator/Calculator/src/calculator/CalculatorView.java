@@ -1,13 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package calculator;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.text.DecimalFormat;
 
 /**
@@ -20,7 +13,7 @@ public class CalculatorView extends javax.swing.JFrame {
     private boolean shouldGetNewValue = true;
     private double result = 0;
     private String operation = "";
-    private final DecimalFormat decimalFormat = new DecimalFormat("#.########");
+    private final DecimalFormat decimalFormat = new DecimalFormat("#.###################");
 
     /**
      * Creates new form CalculatorView
@@ -28,52 +21,63 @@ public class CalculatorView extends javax.swing.JFrame {
     public CalculatorView() {
         initComponents();
     }
-    
+
     private void updateTextField(ActionEvent evt) {
         String newText;
-        
+
         if (shouldGetNewValue) {
             newText = evt.getActionCommand();
         } else {
             newText = resultTextField.getText() + evt.getActionCommand();
         }
-        
+
         Long newNumber = Long.parseLong(newText);
 
         resultTextField.setText(newNumber.toString());
-        
+
         shouldGetNewValue = false;
     }
-    
+
     private void updateTextField(String text) {
         resultTextField.setText(text);
 
         shouldGetNewValue = false;
     }
-    
+
     private void updateNumbersForOperations() {
         String resultText = resultTextField.getText();
-        
+
         if (lhsNumber == null) {
             lhsNumber = Double.parseDouble(resultText);
-        } else {
+        } else if (rhsNumber == null) {
             rhsNumber = Double.parseDouble(resultText);
         }
     }
-    
+
     private void updateOperation(ActionEvent evt) {
+        rhsNumber = null;
+
         updateNumbersForOperations();
 
+        if (operation.isEmpty()) {
+            operation = evt.getActionCommand();
+        }
+
+        if (!shouldGetNewValue) {
+            makeCalculation();
+        }
+
         operation = evt.getActionCommand();
+
         shouldGetNewValue = true;
     }
-    
+
     private void deleteCharFromTextField() {
         String resultText = resultTextField.getText();
-                
+
         if (!resultText.isEmpty() && !"0".equals(resultText)) {
             resultText = resultText.substring(0, resultText.length() - 1);
-            
+
             if (resultText.isEmpty()) {
                 resultText = "0";
             }
@@ -111,7 +115,6 @@ public class CalculatorView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Calculator");
-        setAlwaysOnTop(true);
         setName("calculatorFrame"); // NOI18N
         setResizable(false);
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -430,7 +433,10 @@ public class CalculatorView extends javax.swing.JFrame {
 
     private void equalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_equalButtonActionPerformed
         updateNumbersForOperations();
-        
+        makeCalculation();
+    }//GEN-LAST:event_equalButtonActionPerformed
+
+    private void makeCalculation() {
         if (lhsNumber == null || rhsNumber == null) {
             return;
         }
@@ -438,27 +444,28 @@ public class CalculatorView extends javax.swing.JFrame {
         switch (operation) {
             case "+":
                 result = lhsNumber + rhsNumber;
-            break;
-            
+                break;
+
             case "-":
                 result = lhsNumber - rhsNumber;
-            break;
-            
+                break;
+
             case "*":
                 result = lhsNumber * rhsNumber;
-            break;
-            
+                break;
+
             case "/":
                 result = lhsNumber / rhsNumber;
-            break;
-            
+                break;
+
             default:
         }
-        
+
+        lhsNumber = result;
+
         String newText = decimalFormat.format(result);
-        
         resultTextField.setText(newText);
-    }//GEN-LAST:event_equalButtonActionPerformed
+    }
 
     private void sumButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sumButtonActionPerformed
         updateOperation(evt);
@@ -470,67 +477,67 @@ public class CalculatorView extends javax.swing.JFrame {
         ActionEvent action = new ActionEvent(evt, 0, keyTypedAsString);
 
         switch (keyTyped) {
-            case '0': 
+            case '0':
                 zeroButtonActionPerformed(action);
             break;
 
-            case '1': 
+            case '1':
                 oneButtonActionPerformed(action);
             break;
-            
-            case '2': 
+
+            case '2':
                 twoButtonActionPerformed(action);
             break;
-            
-            case '3': 
+
+            case '3':
                 threeButtonActionPerformed(action);
             break;
-            
-            case '4': 
+
+            case '4':
                 fourButtonActionPerformed(action);
             break;
-            
-            case '5': 
+
+            case '5':
                 fiveButtonActionPerformed(action);
             break;
-            
-            case '6': 
+
+            case '6':
                 sixButtonActionPerformed(action);
             break;
-            
-            case '7': 
+
+            case '7':
                 sevenButtonActionPerformed(action);
             break;
-            
-            case '8': 
+
+            case '8':
                 eightButtonActionPerformed(action);
             break;
-            
-            case '9': 
+
+            case '9':
                 nineButtonActionPerformed(action);
             break;
-            
-            case '+': 
+
+            case '+':
                 sumButtonActionPerformed(action);
             break;
-            
-            case '-': 
+
+            case '-':
                 minusButtonActionPerformed(action);
             break;
-            
-            case '/': 
+
+            case '/':
                 divisionButtonActionPerformed(action);
             break;
-            
+
             case '*':
                 multiplicationButtonActionPerformed(action);
             break;
-            
+
             case '=':
             case '\n':
                 equalButtonActionPerformed(action);
             break;
-            
+
             case '\b':
                 deleteCharFromTextField();
             break;
@@ -540,10 +547,10 @@ public class CalculatorView extends javax.swing.JFrame {
                     case 27:
                         clearButtonActionPerformed(action);
                         break;
-                        
+
                     default:
                 }
-                
+
         }
     }//GEN-LAST:event_formKeyTyped
 
@@ -554,7 +561,7 @@ public class CalculatorView extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -567,7 +574,7 @@ public class CalculatorView extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(CalculatorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         //</editor-fold>
 
         /* Create and display the form */
