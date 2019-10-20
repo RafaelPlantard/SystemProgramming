@@ -67,6 +67,20 @@ public class CalculatorView extends javax.swing.JFrame {
         operation = evt.getActionCommand();
         shouldGetNewValue = true;
     }
+    
+    private void deleteCharFromTextField() {
+        String resultText = resultTextField.getText();
+                
+        if (!resultText.isEmpty() && !"0".equals(resultText)) {
+            resultText = resultText.substring(0, resultText.length() - 1);
+            
+            if (resultText.isEmpty()) {
+                resultText = "0";
+            }
+
+            resultTextField.setText(resultText);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -452,14 +466,84 @@ public class CalculatorView extends javax.swing.JFrame {
 
     private void formKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyTyped
         char keyTyped = evt.getKeyChar();
+        String keyTypedAsString = Character.toString(keyTyped);
+        ActionEvent action = new ActionEvent(evt, 0, keyTypedAsString);
 
         switch (keyTyped) {
             case '0': 
-                zeroButtonActionPerformed(new ActionEvent(evt, 0, "0"));
+                zeroButtonActionPerformed(action);
             break;
 
-            case '1': oneButtonActionPerformed(new ActionEvent(evt, 0, "1"));
+            case '1': 
+                oneButtonActionPerformed(action);
+            break;
+            
+            case '2': 
+                twoButtonActionPerformed(action);
+            break;
+            
+            case '3': 
+                threeButtonActionPerformed(action);
+            break;
+            
+            case '4': 
+                fourButtonActionPerformed(action);
+            break;
+            
+            case '5': 
+                fiveButtonActionPerformed(action);
+            break;
+            
+            case '6': 
+                sixButtonActionPerformed(action);
+            break;
+            
+            case '7': 
+                sevenButtonActionPerformed(action);
+            break;
+            
+            case '8': 
+                eightButtonActionPerformed(action);
+            break;
+            
+            case '9': 
+                nineButtonActionPerformed(action);
+            break;
+            
+            case '+': 
+                sumButtonActionPerformed(action);
+            break;
+            
+            case '-': 
+                minusButtonActionPerformed(action);
+            break;
+            
+            case '/': 
+                divisionButtonActionPerformed(action);
+            break;
+            
+            case '*':
+                multiplicationButtonActionPerformed(action);
+            break;
+            
+            case '=':
+            case '\n':
+                equalButtonActionPerformed(action);
+            break;
+            
+            case '\b':
+                deleteCharFromTextField();
+            break;
+
             default:
+                switch (evt.getExtendedKeyCode()) {
+                    case 27:
+                        clearButtonActionPerformed(action);
+                        break;
+                        
+                    default:
+                }
+                
         }
     }//GEN-LAST:event_formKeyTyped
 
