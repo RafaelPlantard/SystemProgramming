@@ -11,7 +11,6 @@ public class CalculatorView extends javax.swing.JFrame {
     private Double lhsNumber = null;
     private Double rhsNumber = null;
     private boolean shouldGetNewValue = true;
-    private double result = 0;
     private String operation = "";
     private final DecimalFormat decimalFormat = new DecimalFormat("#.###################");
 
@@ -55,21 +54,35 @@ public class CalculatorView extends javax.swing.JFrame {
     }
 
     private void updateOperation(ActionEvent evt) {
-        rhsNumber = null;
+        boolean isEqualOperation = evt.getActionCommand().equals("=");
+        boolean isDifferentOperation = !evt.getActionCommand().equals(operation);
+
+        if (isDifferentOperation && !isEqualOperation && lhsNumber != null && rhsNumber != null) {
+            operation = evt.getActionCommand();
+            shouldGetNewValue = true;
+            rhsNumber = null;
+            return;
+        }
 
         updateNumbersForOperations();
 
-        if (operation.isEmpty()) {
+        if (operation.isEmpty() && !isEqualOperation) {
             operation = evt.getActionCommand();
         }
 
-        if (!shouldGetNewValue) {
+        if (!shouldGetNewValue || isEqualOperation) {
             makeCalculation();
         }
 
-        operation = evt.getActionCommand();
+        if (!isEqualOperation) {
+            rhsNumber = null;
+        }
 
-        shouldGetNewValue = true;
+        if (!isEqualOperation) {
+            operation = evt.getActionCommand();
+
+            shouldGetNewValue = true;
+        }
     }
 
     private void deleteCharFromTextField() {
@@ -419,10 +432,10 @@ public class CalculatorView extends javax.swing.JFrame {
     }//GEN-LAST:event_minusButtonActionPerformed
 
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
-        result = 0;
-        operation = "";
         lhsNumber = null;
         rhsNumber = null;
+        shouldGetNewValue = true;
+        operation = "";
 
         updateTextField("0");
     }//GEN-LAST:event_clearButtonActionPerformed
@@ -432,14 +445,15 @@ public class CalculatorView extends javax.swing.JFrame {
     }//GEN-LAST:event_zeroButtonActionPerformed
 
     private void equalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_equalButtonActionPerformed
-        updateNumbersForOperations();
-        makeCalculation();
+        updateOperation(evt);
     }//GEN-LAST:event_equalButtonActionPerformed
 
     private void makeCalculation() {
         if (lhsNumber == null || rhsNumber == null) {
             return;
         }
+
+        double result;
 
         switch (operation) {
             case "+":
@@ -459,6 +473,8 @@ public class CalculatorView extends javax.swing.JFrame {
                 break;
 
             default:
+                result = 0;
+                break;
         }
 
         lhsNumber = result;
