@@ -37,12 +37,6 @@ public class CalculatorView extends javax.swing.JFrame {
         shouldGetNewValue = false;
     }
 
-    private void updateTextField(String text) {
-        resultTextField.setText(text);
-
-        shouldGetNewValue = false;
-    }
-
     private void updateNumbersForOperations() {
         String resultText = resultTextField.getText();
 
@@ -436,8 +430,7 @@ public class CalculatorView extends javax.swing.JFrame {
         rhsNumber = null;
         shouldGetNewValue = true;
         operation = "";
-
-        updateTextField("0");
+        resultTextField.setText("0");
     }//GEN-LAST:event_clearButtonActionPerformed
 
     private void zeroButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zeroButtonActionPerformed
