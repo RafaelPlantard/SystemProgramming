@@ -1,96 +1,21 @@
 package calculator;
 
-import java.awt.event.ActionEvent;
-import java.text.DecimalFormat;
-
 /**
+ * Calculator based on macOS's Calculator.app
  *
  * @author Rafael da Silva Ferreira <rafael@swift-yah.io>
  */
 public class CalculatorView extends javax.swing.JFrame {
-    private Double lhsNumber = null;
-    private Double rhsNumber = null;
-    private boolean shouldGetNewValue = true;
-    private String operation = "";
-    private final DecimalFormat decimalFormat = new DecimalFormat("#.###################");
+
+    private final CalculatorController controller;
+
 
     /**
      * Creates new form CalculatorView
      */
     public CalculatorView() {
         initComponents();
-    }
-
-    private void updateTextField(ActionEvent evt) {
-        String newText;
-
-        if (shouldGetNewValue) {
-            newText = evt.getActionCommand();
-        } else {
-            newText = resultTextField.getText() + evt.getActionCommand();
-        }
-
-        Long newNumber = Long.parseLong(newText);
-
-        resultTextField.setText(newNumber.toString());
-
-        shouldGetNewValue = false;
-    }
-
-    private void updateNumbersForOperations() {
-        String resultText = resultTextField.getText();
-
-        if (lhsNumber == null) {
-            lhsNumber = Double.parseDouble(resultText);
-        } else if (rhsNumber == null) {
-            rhsNumber = Double.parseDouble(resultText);
-        }
-    }
-
-    private void updateOperation(ActionEvent evt) {
-        boolean isEqualOperation = evt.getActionCommand().equals("=");
-        boolean isDifferentOperation = !evt.getActionCommand().equals(operation);
-
-        if (isDifferentOperation && !isEqualOperation && lhsNumber != null && rhsNumber != null) {
-            operation = evt.getActionCommand();
-            shouldGetNewValue = true;
-            rhsNumber = null;
-            return;
-        }
-
-        updateNumbersForOperations();
-
-        if (operation.isEmpty() && !isEqualOperation) {
-            operation = evt.getActionCommand();
-        }
-
-        if (!shouldGetNewValue || isEqualOperation) {
-            makeCalculation();
-        }
-
-        if (!isEqualOperation) {
-            rhsNumber = null;
-        }
-
-        if (!isEqualOperation) {
-            operation = evt.getActionCommand();
-
-            shouldGetNewValue = true;
-        }
-    }
-
-    private void deleteCharFromTextField() {
-        String resultText = resultTextField.getText();
-
-        if (!resultText.isEmpty() && !"0".equals(resultText)) {
-            resultText = resultText.substring(0, resultText.length() - 1);
-
-            if (resultText.isEmpty()) {
-                resultText = "0";
-            }
-
-            resultTextField.setText(resultText);
-        }
+        controller = new CalculatorController(resultTextField);
     }
 
     /**
@@ -378,189 +303,71 @@ public class CalculatorView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void sevenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sevenButtonActionPerformed
-        updateTextField(evt);
+        controller.updateTextField(evt);
     }//GEN-LAST:event_sevenButtonActionPerformed
 
     private void eightButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eightButtonActionPerformed
-        updateTextField(evt);
+        controller.updateTextField(evt);
     }//GEN-LAST:event_eightButtonActionPerformed
 
     private void nineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nineButtonActionPerformed
-        updateTextField(evt);
+        controller.updateTextField(evt);
     }//GEN-LAST:event_nineButtonActionPerformed
 
     private void divisionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_divisionButtonActionPerformed
-        updateOperation(evt);
+        controller.updateOperation(evt);
     }//GEN-LAST:event_divisionButtonActionPerformed
 
     private void fourButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fourButtonActionPerformed
-        updateTextField(evt);
+        controller.updateTextField(evt);
     }//GEN-LAST:event_fourButtonActionPerformed
 
     private void fiveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fiveButtonActionPerformed
-        updateTextField(evt);
+        controller.updateTextField(evt);
     }//GEN-LAST:event_fiveButtonActionPerformed
 
     private void sixButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sixButtonActionPerformed
-        updateTextField(evt);
+        controller.updateTextField(evt);
     }//GEN-LAST:event_sixButtonActionPerformed
 
     private void multiplicationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_multiplicationButtonActionPerformed
-        updateOperation(evt);
+        controller.updateOperation(evt);
     }//GEN-LAST:event_multiplicationButtonActionPerformed
 
     private void oneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oneButtonActionPerformed
-        updateTextField(evt);
+        controller.updateTextField(evt);
     }//GEN-LAST:event_oneButtonActionPerformed
 
     private void twoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_twoButtonActionPerformed
-        updateTextField(evt);
+        controller.updateTextField(evt);
     }//GEN-LAST:event_twoButtonActionPerformed
 
     private void threeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_threeButtonActionPerformed
-        updateTextField(evt);
+        controller.updateTextField(evt);
     }//GEN-LAST:event_threeButtonActionPerformed
 
     private void minusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minusButtonActionPerformed
-        updateOperation(evt);
+        controller.updateOperation(evt);
     }//GEN-LAST:event_minusButtonActionPerformed
 
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
-        lhsNumber = null;
-        rhsNumber = null;
-        shouldGetNewValue = true;
-        operation = "";
-        resultTextField.setText("0");
+        controller.clear();
     }//GEN-LAST:event_clearButtonActionPerformed
 
     private void zeroButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zeroButtonActionPerformed
-        updateTextField(evt);
+        controller.updateTextField(evt);
     }//GEN-LAST:event_zeroButtonActionPerformed
 
     private void equalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_equalButtonActionPerformed
-        updateOperation(evt);
+        controller.updateOperation(evt);
     }//GEN-LAST:event_equalButtonActionPerformed
 
-    private void makeCalculation() {
-        if (lhsNumber == null || rhsNumber == null) {
-            return;
-        }
-
-        double result;
-
-        switch (operation) {
-            case "+":
-                result = lhsNumber + rhsNumber;
-                break;
-
-            case "-":
-                result = lhsNumber - rhsNumber;
-                break;
-
-            case "*":
-                result = lhsNumber * rhsNumber;
-                break;
-
-            case "/":
-                result = lhsNumber / rhsNumber;
-                break;
-
-            default:
-                result = 0;
-                break;
-        }
-
-        lhsNumber = result;
-
-        String newText = decimalFormat.format(result);
-        resultTextField.setText(newText);
-    }
-
     private void sumButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sumButtonActionPerformed
-        updateOperation(evt);
+        controller.updateOperation(evt);
     }//GEN-LAST:event_sumButtonActionPerformed
 
     private void formKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyTyped
-        char keyTyped = evt.getKeyChar();
-        String keyTypedAsString = Character.toString(keyTyped);
-        ActionEvent action = new ActionEvent(evt, 0, keyTypedAsString);
-
-        switch (keyTyped) {
-            case '0':
-                zeroButtonActionPerformed(action);
-            break;
-
-            case '1':
-                oneButtonActionPerformed(action);
-            break;
-
-            case '2':
-                twoButtonActionPerformed(action);
-            break;
-
-            case '3':
-                threeButtonActionPerformed(action);
-            break;
-
-            case '4':
-                fourButtonActionPerformed(action);
-            break;
-
-            case '5':
-                fiveButtonActionPerformed(action);
-            break;
-
-            case '6':
-                sixButtonActionPerformed(action);
-            break;
-
-            case '7':
-                sevenButtonActionPerformed(action);
-            break;
-
-            case '8':
-                eightButtonActionPerformed(action);
-            break;
-
-            case '9':
-                nineButtonActionPerformed(action);
-            break;
-
-            case '+':
-                sumButtonActionPerformed(action);
-            break;
-
-            case '-':
-                minusButtonActionPerformed(action);
-            break;
-
-            case '/':
-                divisionButtonActionPerformed(action);
-            break;
-
-            case '*':
-                multiplicationButtonActionPerformed(action);
-            break;
-
-            case '=':
-            case '\n':
-                equalButtonActionPerformed(action);
-            break;
-
-            case '\b':
-                deleteCharFromTextField();
-            break;
-
-            default:
-                switch (evt.getExtendedKeyCode()) {
-                    case 27:
-                        clearButtonActionPerformed(action);
-                        break;
-
-                    default:
-                }
-
-        }
+        controller.handleKeyTyped(evt);
     }//GEN-LAST:event_formKeyTyped
 
     /**
